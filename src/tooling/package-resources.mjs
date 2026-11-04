@@ -63,3 +63,6 @@ if (platform !== "windows") {
   chmodSync(join(output, "agent-hud-engine"), 0o755);
   chmodSync(join(output, "agent-hud-mcp"), 0o755);
 }
+// hud-dock: Bun's compiled relay comes out with a broken signature, and macOS kills it on launch.
+if (platform === "darwin")
+  run("codesign", ["--force", "--sign", "-", join(output, "agent-hud-mcp")]);
